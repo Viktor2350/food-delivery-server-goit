@@ -1,0 +1,23 @@
+{
+  "name": "homework-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "debug": "node --inspect index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Viktor2350/food-delivery-server-goit.git"
+  },
+  "author": "Viktor",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Viktor2350/food-delivery-server-goit/issues"
+  },
+  "homepage": "https://github.com/Viktor2350/food-delivery-server-goit#readme",
+  "dependencies": {
+    "morgan": "^1.9.1"
+  }
+}
