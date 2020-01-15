@@ -11,39 +11,57 @@ const saveUser = user => {
     })
 };
 
+
+const checkUser = user => {
+    const userName = user.username;
+    const userPhone = user.telephone.replace(/\s/g, "");
+    const userPass = user.password;
+    const userEmail = user.email;
+    if (typeof userName === "string" &&
+        !isNaN(Number(userPhone)) &&
+        typeof userPass === "string" &&
+        typeof userEmail === "string")
+        return true
+    else return false
+}
+
 const signUpRoute = (request, response) => {
 
     if (request.method === 'POST') {
         let body = '';
 
         request.on('data', function (data) {
-            body += data;
+            body = body + data;
             console.log('Incoming data!!!!');
         });
 
         request.on('end', function () {
             const user = JSON.parse(body);
-            saveUser(user)
-            const success = {
-                status: 'success',
-                user: user
+            if (checkUser(user)) {
+                saveUser(user)
+                const success = {
+                    status: 'success',
+                    user: user
+                }
+
+                response.writeHead(200, {
+                    "Content-type": "application/json"
+                });
+                response.write(JSON.stringify(success));
+                response.end();
+
+            } else {
+                const error = {
+                    status: 'error'
+                };
+
+                response.writeHead(403, {
+                    "Content-type": "application/json"
+                })
+                response.write(JSON.stringify(error));
+                response.end();
+
             }
-
-            response.writeHead(200, {
-                "Content-type": "application/json"
-            });
-            response.write(JSON.stringify(success));
-            response.end();
-
-            const error = {
-                status: 'error'
-            };
-
-            response.writeHead(403, {
-                "Content-type": "application/json"
-            })
-            response.write(JSON.stringify(error));
-            response.end();
         })
     }
 
